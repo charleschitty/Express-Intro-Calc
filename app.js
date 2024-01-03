@@ -19,10 +19,10 @@ const MISSING = "Expected key `nums` with comma-separated list of numbers.";
 app.get("/mean:nums", function (req, res) {
 
   if (!req.params.nums){
-    throw new BadRequestError("nums are required")
+    throw new BadRequestError(MISSING)
   }
 
-  const nums = convertStrNums(req.params.nums);
+  const nums = convertStrNums(req.params.nums.split(","));
 
   return res.json(
     {
@@ -34,13 +34,14 @@ app.get("/mean:nums", function (req, res) {
 
 /** Finds median of nums in qs: returns {operation: "median", result } */
 
-app.get("/median:nums", function (req, res) {
-
-  if (!req.params.nums){
-    throw new BadRequestError("nums are required")
+app.get("/median", function (req, res) {
+  console.log(req.query.nums)
+  if (!req.query.nums){
+    throw new BadRequestError(MISSING)
   }
+  console.log(req.query.nums)
+  const nums = convertStrNums(req.query.nums);
 
-  const nums = convertStrNums(req.params.nums);
 
   return res.json(
     {
@@ -54,10 +55,10 @@ app.get("/median:nums", function (req, res) {
 app.get("/mode:nums", function (req, res) {
 
   if (!req.params.nums){
-    throw new BadRequestError("nums are required")
+    throw new BadRequestError(MISSING)
   }
 
-  const nums = convertStrNums(req.params.nums);
+  const nums = convertStrNums(req.params.nums.split(","));
 
   return res.json(
     {
