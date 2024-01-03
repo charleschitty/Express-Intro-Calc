@@ -16,8 +16,8 @@ const MISSING = "Expected key `nums` with comma-separated list of numbers.";
 
 /** Finds mean of nums in qs: returns {operation: "mean", result } */
 
-app.get("/mean:nums", function (req, res) {
-
+app.get("/mean", function (req, res) {
+  console.log("mean query nums=", req.query.nums)
   if (!req.params.nums){
     throw new BadRequestError(MISSING)
   }
@@ -35,13 +35,13 @@ app.get("/mean:nums", function (req, res) {
 /** Finds median of nums in qs: returns {operation: "median", result } */
 
 app.get("/median", function (req, res) {
-  console.log(req.query.nums)
+  console.log("median query nums=", req.query.nums)
   if (!req.query.nums){
     throw new BadRequestError(MISSING)
   }
-  console.log(req.query.nums)
-  const nums = convertStrNums(req.query.nums);
 
+  const nums = convertStrNums(req.query.nums.split(","));
+  console.log("nums after convertStrNums", nums)
 
   return res.json(
     {
@@ -52,13 +52,13 @@ app.get("/median", function (req, res) {
 
 /** Finds mode of nums in qs: returns {operation: "mean", result } */
 
-app.get("/mode:nums", function (req, res) {
+app.get("/mode", function (req, res) {
 
-  if (!req.params.nums){
+  if (!req.query.nums){
     throw new BadRequestError(MISSING)
   }
 
-  const nums = convertStrNums(req.params.nums.split(","));
+  const nums = convertStrNums(req.query.nums.split(","));
 
   return res.json(
     {
